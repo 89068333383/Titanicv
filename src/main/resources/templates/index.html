@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Titanic</title>
+</head>
+<body class="bg-light">
+
+<div class="container">
+    <label>
+        <form class="form-inline mt-2 mt-md-0 form-control" > Поиск по имени пассажира
+            <input type="text" th:field="*{sortParam.name}" class="form-control" name="countPassenger" placeholder="Имя пассажира" th:value="@{sortParam.name}">
+        </form>
+    </label>
+    <div class="py-5 text-center">
+        <h2>Пассажиры титаника</h2>
+        <p class="lead">На данной странице вы можете просмотреть данные о пассажирах титаника</p>
+    </div>
+    <form class="mb-4" th:action="@{/passenger}" method="get" >
+    <div class="row">
+        <div class="col">
+            <h2>Фильтровать:</h2>
+        </div>
+        <div class="form-control">
+            <label>Выжившие/погибшие
+            <select class="form-control" name="survived">
+
+                <option value="0"></option>
+                <option value="1" th:field="*{sortParam.survived}" th:selected="${sortParam.survived == 1}">Выжившие</option>
+                <option value="2" th:field="*{sortParam.survived}" th:selected="${sortParam.survived == 2}">Невыжившие</option>
+            </select>
+            </label>
+            <label>Совершеннолетние(сташе 16)
+            <select class="form-control" name="age">
+                <option value="0"></option>
+                <option value="1" th:field="*{sortParam.age}" th:selected="${sortParam.age == 1}">Совершеннолетние</option>
+                <option value="2" th:field="*{sortParam.age}" th:selected="${sortParam.age == 2}">Несовершеннолетние</option>
+            </select>
+            </label>
+            <label>   Пол
+                <select class="form-control" name="sex">
+                    <option value="0"></option>
+                    <option value="1" th:field="*{sortParam.sex}" th:selected="${sortParam.sex == 1}">Мужчина</option>
+                    <option value="2" th:field="*{sortParam.sex}" th:selected="${sortParam.sex == 2}">Женщина</option>
+                </select>
+            </label>
+            <label>Наличие родственников
+                <select class="form-control" name="siblings">
+                    <option value="0"></option>
+                    <option value="1" th:field="*{sortParam.siblings}" th:selected="${sortParam.siblings == 'true'}">Имеют родственников</option>
+                    <option value="2" th:field="*{sortParam.siblings}" th:selected="${sortParam.siblings == 'false'}">Не имеют родственников</option>
+                </select>
+            </label>
+            <label>Сортировать по:
+                <select class="form-control" name="sortBy" >
+                    <option value="0"></option>
+                    <option value="1" th:field="*{sortParam.sortBy}" th:selected="${sortParam.sortBy == 'true'}">Имя(Возрастание)</option>
+                    <option value="2" th:field="*{sortParam.sortBy}" th:selected="${sortParam.sortBy == 'true'}">Имя(Убывание)</option>
+                    <option value="3" th:field="*{sortParam.sortBy}" th:selected="${sortParam.sortBy == 'true'}">Возраст(Возрастание)</option>
+                    <option value="4" th:field="*{sortParam.sortBy}" th:selected="${sortParam.sortBy == 'true'}">Возраст(Убывание)</option>
+                    <option value="5" th:field="*{sortParam.sortBy}" th:selected="${sortParam.sortBy == 'true'}">Оплата(Возрастание)</option>
+                    <option value="6" th:field="*{sortParam.sortBy}" th:selected="${sortParam.sortBy == 'true'}">Оплата(Убывание)</option>
+                </select>
+            </label>
+
+            <button >Применить фильтр</button>
+
+        </div>
+
+        <div class="form-control">
+            <label>Пассажиров на странице:
+                <input type="text" th:field="*{sortParam.countPassenger}"  name="countPassenger"  th:value="@{sortParam.countPassenger}">
+            </label>
+            <th>
+                <button type="submit" th:field="*{sortParam.sizeBegin}" th:value="-1" th:name="sizeBegin" >Страница назад</button>
+            </th>
+            <th>
+                <button type="submit" th:field="*{sortParam.sizeBegin}" th:value="1" th:name="sizeBegin" >Страница вперед</button>
+            </th>
+        </div>
+        <tr>
+
+
+        </tr>
+
+
+
+
+    </form>
+    </div>
+
+    <br/>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="text-justify">#</th>
+                <th class="text-justify">Выжил</th>
+                <th class="text-justify">Класс</th>
+                <th class="text-justify">Имя</th>
+                <th class="text-justify">Пол</th>
+                <th class="text-justify">возраст</th>
+                <th class="text-justify">Родственники на борту</th>
+                <th class="text-justify">Дети/Родители на борту</th>
+                <th class="text-justify">стоимотсь билета</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="titanic : ${passengers}">
+                <td class="align-middle"><span th:text="${titanic.id}"/></td>
+                <td class="align-middle"><span th:text="${titanic.survived}"/></td>
+                <td class="align-middle"><span th:text="${titanic.pclass}"/></td>
+                <td class="align-middle"><span th:text="${titanic.name}"/></td>
+                <td class="align-middle"><span th:text="${titanic.sex}"/></td>
+                <td class="align-middle"><span th:text="${titanic.age}/100"/></td>
+                <td class="align-middle"><span th:text="${titanic.siblings}"/></td>
+                <td class="align-middle"><span th:text="${titanic.parents}"/></td>
+                <td class="align-middle"><span th:text="${titanic.fare}/1000"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<form>
+    <div class="container">
+        <h2>Статистика:</h2>
+        <tr >
+            <h3>Общая сумма оплаты проезда:</h3>
+            <tr class="align-middle"><span th:text="${repStat.fare}/1000"></tr>
+            <h3>Количество людей имеющих родственников на борту:</h3>
+            <tr class="align-middle"><span th:text="${repStat.siblings}"/></tr>
+            <h3>Количество выживших на борту:</h3>
+            <tr class="align-middle"><span th:text="${repStat.survived}"/></tr>
+        </tr>
+
+    </div>
+</form>
+
+</body>
+</html>
