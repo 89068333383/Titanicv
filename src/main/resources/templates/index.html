@@ -115,7 +115,7 @@
             <tr th:each="titanic : ${passengers}">
                 <td class="align-middle"><span th:text="${titanic.id}"/></td>
                 <td class="align-middle"><span th:text="${titanic.survived}"/></td>
-                <td class="align-middle"><span th:text="${titanic.pclass}"/></td>
+                <td class="align-middle"><span th:text="${titanic.pclass.name()}"/></td>
                 <td class="align-middle"><span th:text="${titanic.name}"/></td>
                 <td class="align-middle"><span th:text="${titanic.sex}"/></td>
                 <td class="align-middle"><span th:text="${titanic.age}/100"/></td>

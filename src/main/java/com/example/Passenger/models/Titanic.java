@@ -16,7 +16,7 @@ public class Titanic {
     private Boolean survived;
 
     @Column(name = "pclass", length = Integer.MAX_VALUE)
-    private String pclass;
+    private Pclass pclass;
 
     @Column(name = "name", length = Integer.MAX_VALUE)
     private String name;
@@ -52,11 +52,11 @@ public class Titanic {
         this.survived = survived;
     }
 
-    public String getPclass() {
+    public Pclass getPclass() {
         return pclass;
     }
 
-    public void setPclass(String pclass) {
+    public void setPclass(Pclass pclass) {
         this.pclass = pclass;
     }
 
@@ -111,7 +111,7 @@ public class Titanic {
     public Titanic() {
     }
 
-    public Titanic(Integer id, Boolean survived, String pclass, String name, String sex, Integer age, Integer siblings, Integer parents, Integer fare) {
+    public Titanic(Integer id, Boolean survived, Pclass pclass, String name, String sex, Integer age, Integer siblings, Integer parents, Integer fare) {
         this.id = id;
         this.survived = survived;
         this.pclass = pclass;
