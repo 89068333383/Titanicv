@@ -1,26 +1,20 @@
-package com.example.Passenger.service;
+package com.example.Passenger.service.impl;
 
 import com.example.Passenger.models.FindStat;
-import com.example.Passenger.models.Pclass;
 import com.example.Passenger.models.SortParam;
 import com.example.Passenger.models.Titanic;
 import com.example.Passenger.repository.TitanicRepository;
+import com.example.Passenger.service.PasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
-
-import static org.springframework.cglib.beans.BeanMap.create;
 
 
 @Service
-public class PasService {
+public class PasServiceImpl implements PasService {
 
     private TitanicRepository titanicRepository;
 
@@ -35,11 +29,11 @@ public class PasService {
         int sortByAge=0;
         int sortByName=0;
 
-        if ((sortParam.sizeBegin==-1)&(sortParam.numBegin==0)){
-            sortParam.numBegin=0;
-        }else sortParam.numBegin = sortParam.numBegin + sortParam.sizeBegin;
+        if ((sortParam.getSizeBegin()==-1)&(sortParam.getNumBegin()==0)){
+            sortParam.setNumBegin(0);
+        }else sortParam.setNumBegin(sortParam.getNumBegin() + sortParam.getSizeBegin());;
 
-        Pageable pageable = PageRequest.of(sortParam.numBegin,sortParam.countPassenger);
+        Pageable pageable = PageRequest.of(sortParam.getNumBegin(),sortParam.getCountPassenger());
         switch (sortParam.getSortBy()){
             case(3): {
                     sortByAge = 1;
@@ -74,49 +68,5 @@ public class PasService {
     // Метод для поиска по имени
     public List<Titanic> FindByName(SortParam sortParam){
         return titanicRepository.findByNameContains('%'+sortParam.getName()+'%');
-    }
-
-    public boolean addData() {
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("titanic.csv")));
-            String fileContent;
-            String line = bufferedReader.readLine();
-            line = bufferedReader.readLine();
-            int count = 0;
-            while (line != null) {
-                Titanic titanic = new Titanic();
-//                create(titanic);
-//                titanic.setId(1);
-
-
-                String[] split = line.split(",");
-//                titanic.setId(count);
-                boolean _survived = (Integer.parseInt(split[0])==1)? true:false;
-                titanic.setSurvived(_survived);
-                var _pclass = Pclass.setTitle(Integer.parseInt(split[1]));
-                titanic.setPclass(_pclass);
-                titanic.setName(split[2]);
-                titanic.setSex(split[3]);
-                titanic.setAge((int)(Double.valueOf(split[4])*100)); //года в сотнях
-                titanic.setSiblings(Integer.valueOf(split[5]));
-                titanic.setParents(Integer.valueOf(split[6]));
-                titanic.setFare(((int) (Double.valueOf(split[7])*1000)));//стоимость в $*1000
-
-                System.out.println(titanic.toString());
-                create(titanic);
-
-                System.out.println(titanic.toString());
-
-                line = bufferedReader.readLine();
-                count++;
-            }
-
-            bufferedReader.close();
-
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return true;
     }
 }

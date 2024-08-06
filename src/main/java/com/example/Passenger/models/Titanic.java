@@ -15,13 +15,13 @@ public class Titanic {
     @Column(name = "survived")
     private Boolean survived;
 
-    @Column(name = "pclass", length = Integer.MAX_VALUE)
+    @Column(name = "pclass")
     private Pclass pclass;
 
     @Column(name = "name", length = Integer.MAX_VALUE)
     private String name;
 
-    @Column(name = "sex", length = Integer.MAX_VALUE)
+    @Column(name = "sex")
     private String sex;
 
     @Column(name = "age")

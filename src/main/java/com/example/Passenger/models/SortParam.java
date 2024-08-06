@@ -2,25 +2,23 @@ package com.example.Passenger.models;
 
 // класс, используемый для передачи данных
 public class SortParam {
-        public String name;
+        private String name;
+        private int numBegin=0;
+        private int sizeBegin;
+        private int survived;
+        private int age;
+        private int sex;
+        private int siblings;
+        private int parents;
+        private int countPassenger;
+        private int sortBy;
 
         public void setName(String name) {
                 this.name = name;
         }
-
         public String getName() {
                 return name;
         }
-        public int numBegin=0;
-        public int sizeBegin;
-        public int survived;
-        public int age;
-        public int sex;
-        public int siblings;
-        public int parents;
-        public int countPassenger;
-        public int sortBy;
-
         public int getNumBegin() {
                 return numBegin;
         }
