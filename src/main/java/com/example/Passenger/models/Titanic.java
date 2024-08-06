@@ -8,7 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 public class Titanic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('titanic_id_seq'::regclass)")
+//    @ColumnDefault("nextval('titanic_id_seq'::regclass)")
     @Column(name = "id", nullable = false)
     private Integer id;
 

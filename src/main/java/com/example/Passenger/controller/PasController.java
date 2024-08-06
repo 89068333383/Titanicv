@@ -25,10 +25,10 @@ public class PasController {
     @GetMapping("/passenger")
     public String index(@ModelAttribute SortParam sortParam, Model model){
         if (sortParam.getName()!=null) {
-            model.addAttribute("passengers", service.FindByName(sortParam));
+            model.addAttribute("passengers", service.findByName(sortParam));
         }else {
             if (sortParam.getCountPassenger() == 0) sortParam.setCountPassenger(50);
-            model.addAttribute("passengers", service.findRequest(sortParam));
+            model.addAttribute("passengers", service.findBySort(sortParam));
         }
         model.addAttribute("repStat", service.findStat(sortParam));
         return "index";

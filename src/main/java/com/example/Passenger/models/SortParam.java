@@ -3,7 +3,7 @@ package com.example.Passenger.models;
 // класс, используемый для передачи данных
 public class SortParam {
         private String name;
-        private int numBegin=0;
+        private int numBegin;
         private int sizeBegin;
         private int survived;
         private int age;
